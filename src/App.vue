@@ -19,6 +19,18 @@
       @remove="removePost"
     />
     <div v-else style="font-size: 2rem">Post loading ...</div>
+
+    <div class="pagination__wrapper">
+      <div
+        class="pagination-item"
+        :key="pageNumber"
+        v-for="pageNumber in totalPage"
+        @click="onChangePage(pageNumber)"
+        :class="{ 'pagination-item_current': page === pageNumber }"
+      >
+        {{ pageNumber }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -43,7 +55,7 @@ export default {
       selectedSort: "",
       searchQuery: "",
       page: 1,
-      limit: 10,
+      limit: 6,
       totalPage: 0,
       sortOptions: [
         { value: "title", name: "Sort by name" },
@@ -65,6 +77,11 @@ export default {
       this.dialogVisible = true;
     },
 
+    onChangePage(pageNumber) {
+      this.page = pageNumber;
+      // this.fetchPosts();
+    },
+
     async fetchPosts() {
       try {
         this.isPostsLoading = true;
@@ -77,7 +94,9 @@ export default {
             },
           }
         );
-        this.totalPage = Math.ceil(response.headers['x-total-count'] / this.limit)
+        this.totalPage = Math.ceil(
+          response.headers["x-total-count"] / this.limit
+        );
         this.posts = response.data;
       } catch (err) {
         alert(err);
@@ -91,16 +110,20 @@ export default {
     this.fetchPosts();
   },
 
-  // watch: {
-  //   // selectedSort(newValue) {
-  //   //   this.posts.sort((post1, post2) => {
-  //   //     return post1[newValue]?.localeCompare(post2[newValue])
-  //   //   })
-  //   // }
-  //   selectedSort(newValue) {
-  //     this.posts.sort((a, b) => a[newValue]?.localeCompare(b[newValue]))
-  //   }
-  // },
+  watch: {
+    // selectedSort(newValue) {
+    //   this.posts.sort((post1, post2) => {
+    //     return post1[newValue]?.localeCompare(post2[newValue])
+    //   })
+    // }
+    // selectedSort(newValue) {
+    //   this.posts.sort((a, b) => a[newValue]?.localeCompare(b[newValue]))
+    // }
+
+    page() {
+      this.fetchPosts();
+    },
+  },
 
   computed: {
     sortedPosts() {
@@ -165,5 +188,35 @@ li {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 1rem;
+}
+
+.pagination__wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination-item {
+  min-inline-size: 4rem;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: green;
+  color: beige;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+
+.pagination-item:hover,
+.pagination-item:focus,
+.pagination-item_current {
+  background-color: chartreuse;
+  color: darkslateblue;
+  transform: scale(1.2);
+}
+
+.pagination-item:not(:last-of-type) {
+  margin-inline-end: 1rem;
 }
 </style>
