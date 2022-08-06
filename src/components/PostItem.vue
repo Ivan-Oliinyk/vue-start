@@ -1,8 +1,8 @@
 <template>
   <li class="post">
-    <div><strong>Name: </strong>{{ post.title }}</div>
-    <div><strong>Description: </strong>{{ post.body }}</div>
-    <close-btn @click="$emit('remove', post)"/>
+    <div><strong>Name: </strong>{{ firstSymbolToUpperCase(post.title)}}</div>
+    <div><strong>Description: </strong>{{ firstSymbolToUpperCase(post.body)}}</div>
+    <close-btn @click="$emit('remove', post)" />
   </li>
 </template>
 
@@ -14,6 +14,13 @@ export default {
       required: true,
     },
   },
+  methods: {
+    firstSymbolToUpperCase(str) {
+      return str[0].toUpperCase() + str.slice(1)
+    }
+
+
+  }
 };
 </script>
 
@@ -21,7 +28,7 @@ export default {
 .post {
   position: relative;
   font-size: 1.6rem;
-  padding: 1.5rem;
+  padding: 3rem 2rem;
   border: none;
   border-radius: 0.5rem;
   background-color: lightgoldenrodyellow;

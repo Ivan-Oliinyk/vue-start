@@ -4,13 +4,13 @@
     <div>
 
       <my-input
-          v-model="post.title"
-          placeholder="post name"
+          v-model.trim="post.title"
+          placeholder="Enter new post name"
       />
 
       <my-input
-          v-model="post.body"
-          placeholder="post description"
+          v-model.trim="post.body"
+          placeholder="Enter new post description"
       />
       <my-button @click="createPost">Create</my-button>
     </div>
@@ -24,8 +24,9 @@ export default {
   data() {
     return {
       post: {
-        title: '',
-        body: ''
+        title: "",
+        body: "",
+        age: ""
       }
     }
   },
@@ -52,7 +53,7 @@ export default {
 .post-form {
   font-size: 1.6rem;
   color: beige;
-  margin-block-end: 2rem;
+  /*margin-block-end: 2rem;*/
   padding: 2rem;
   border-radius: 0.5rem;
   background-color: lightsteelblue;
@@ -60,7 +61,7 @@ export default {
 
 .post-form div {
   display: grid;
-  grid-template-columns: 1fr 1fr 20rem;
+  grid-template-columns: 1fr;
   gap: 2rem;
 }
 

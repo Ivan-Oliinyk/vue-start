@@ -1,15 +1,15 @@
 <template>
-  <button class="btn-close">&times;</button>
+  <button class="close-btn">&times;</button>
 </template>
 
 <script>
 export default {
-  name: "close-btn"
-}
+  name: "close-btn",
+};
 </script>
 
 <style scoped>
-.btn-close {
+.close-btn {
   padding: 0.5rem;
   position: absolute;
   inset-block-start: 0;

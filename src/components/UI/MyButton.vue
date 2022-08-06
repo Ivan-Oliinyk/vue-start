@@ -19,20 +19,20 @@ export default {
   color: beige;
   font-size: 2rem;
   font-weight: 700;
-  box-shadow: 0 0 0.2rem gray;
   cursor: pointer;
+  transition: background-color 0.3s linear ;
+  min-inline-size: 15rem;
+  margin-inline-start: auto;
 }
 
-@media screen and (max-width: 768px) {
-  .btn {
-    inline-size: 20rem;
-    margin-inline-start: auto;
-  }
+.btn:hover, .btn:focus {
+  background-color: lightgreen;
 }
+
 
 @media screen and (max-width: 366px) {
   .btn {
-    inline-size: 100%;
+    min-inline-size: 100%;
   }
 }
 

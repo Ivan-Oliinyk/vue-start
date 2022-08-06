@@ -11,6 +11,7 @@ export default {
   name: "my-input",
   props: {
     modelValue: [String, Number],
+    modelAge:[String, Number]
   },
   methods: {
     updateInput(event) {
