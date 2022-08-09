@@ -4,6 +4,7 @@
     <div>
 
       <my-input
+          v-focus
           v-model.trim="post.title"
           placeholder="Enter new post name"
       />

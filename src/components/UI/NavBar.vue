@@ -1,13 +1,18 @@
 <template>
   <nav class="navbar">
     <div class="wrapper">
-      <h2>Vue 3 basic</h2>
+      <router-link to="/">
+        <h2>Vue 3 basic</h2>
+      </router-link>
       <ul class="navbar-wrapper">
         <li>
           <router-link to="/posts">Posts page</router-link>
         </li>
         <li>
           <router-link to="/about">About page</router-link>
+        </li>
+        <li>
+          <router-link to="/store">Store</router-link>
         </li>
       </ul>
     </div>
@@ -49,7 +54,7 @@ export default {
 .navbar-wrapper {
   display: grid;
   gap: 2rem;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
 }
 

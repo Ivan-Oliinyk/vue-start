@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <div class="header-container">
-      <my-input v-model.trim="searchQuery" placeholder="Search" />
+      <my-input v-focus v-model.trim="searchQuery" placeholder="Search" />
       <div class="btn-container">
         <my-button @click="showDialog">Create post</my-button>
         <my-select v-model="selectedSort" :options="sortOptions" />
@@ -18,19 +18,7 @@
         @remove="removePost"
     />
     <div v-else style="font-size: 2rem">Post loading ...</div>
-<!--    <div ref="observer"></div>-->
-
-    <div class="pagination__wrapper">
-      <div
-        class="pagination-item"
-        :key="pageNumber"
-        v-for="pageNumber in totalPages"
-        @click="onChangePage(pageNumber)"
-        :class="{ 'pagination-item_current': page === pageNumber }"
-      >
-        {{ pageNumber }}
-      </div>
-    </div>
+    <div v-intersection="loadMorePosts" class="observe"></div>
   </div>
 </template>
 
@@ -105,59 +93,39 @@ export default {
       }
     },
 
-    // async loadMorePosts() {
-    //   try {
-    //     this.page += 1;
-    //
-    //     const response = await axios.get(
-    //         `https://jsonplaceholder.typicode.com/posts`,
-    //         {
-    //           params: {
-    //             _page: this.page,
-    //             _limit: this.limit,
-    //           },
-    //         }
-    //     );
-    //     this.totalPages = Math.ceil(
-    //         response.headers["x-total-count"] / this.limit
-    //     );
-    //     this.posts = [...this.posts, ...response.data];
-    //   } catch (err) {
-    //     alert(err);
-    //   } finally {
-    //   }
-    // },
+    async loadMorePosts() {
+      try {
+        this.page += 1;
+
+        const response = await axios.get(
+            `https://jsonplaceholder.typicode.com/posts`,
+            {
+              params: {
+                _page: this.page,
+                _limit: this.limit,
+              },
+            }
+        );
+        this.totalPages = Math.ceil(
+            response.headers["x-total-count"] / this.limit
+        );
+        this.posts = [...this.posts, ...response.data];
+      } catch (err) {
+        alert(err);
+      } finally {
+      }
+    },
   },
 
   mounted() {
     this.fetchPosts();
-
-    // const options = {
-    //   rootMargin: "0px",
-    //   threshold: 1.0,
-    // };
-    // const callback = (entries, observer) => {
-    //   if (entries[0].isIntersecting && this.page < this.totalPages) {
-    //     this.loadMorePosts();
-    //   }
-    // };
-    // const observer = new IntersectionObserver(callback, options);
-    // observer.observe(this.$refs.observer);
   },
 
   watch: {
-    // selectedSort(newValue) {
-    //   this.posts.sort((post1, post2) => {
-    //     return post1[newValue]?.localeCompare(post2[newValue])
-    //   })
-    // }
     selectedSort(newValue) {
       this.posts.sort((a, b) => a[newValue]?.localeCompare(b[newValue]))
     },
 
-    page() {
-      this.fetchPosts();
-    },
   },
 
   computed: {
@@ -204,33 +172,8 @@ export default {
   gap: 1rem;
 }
 
-.pagination__wrapper {
-  display: flex;
-  justify-content: center;
+.observe {
+
 }
 
-.pagination-item {
-  min-inline-size: 4rem;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: green;
-  color: beige;
-  font-size: 1.6rem;
-  font-weight: 700;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s linear;
-}
-
-.pagination-item:hover,
-.pagination-item:focus,
-.pagination-item_current {
-  background-color: chartreuse;
-  color: darkslateblue;
-  transform: scale(1.2);
-}
-
-.pagination-item:not(:last-of-type) {
-  margin-inline-end: 1rem;
-}
 </style>

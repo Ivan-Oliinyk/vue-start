@@ -6,11 +6,14 @@
       <strong>Description: </strong>{{ firstSymbolToUpperCase(post.body) }}
     </div>
     <close-btn @click="$emit('remove', post)" />
+    <my-button @click="$router.push(`/posts/${post.id}`)">Read mode</my-button>
   </li>
 </template>
 
 <script>
+import MyButton from "@/components/UI/MyButton";
 export default {
+  components: {MyButton},
   props: {
     post: {
       type: Object,
@@ -34,5 +37,8 @@ export default {
   border-radius: 0.5rem;
   background-color: lightgoldenrodyellow;
   color: darkslateblue;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
 }
 </style>
