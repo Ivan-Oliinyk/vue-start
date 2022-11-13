@@ -4,13 +4,10 @@
     <div class="content">
       <router-view></router-view>
     </div>
-
   </div>
 </template>
 
-<script>
-
-</script>
+<script></script>
 
 <style>
 * {
@@ -20,7 +17,7 @@
 }
 
 html {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.2;
   font-family: "Roboto", sans-serif;
 }
@@ -45,5 +42,4 @@ li {
   max-inline-size: 192rem;
   margin: 0 auto;
 }
-
 </style>
